@@ -1,4 +1,4 @@
-Version 8: SCU Manager Preset Config Manager (right click on Combat or Eng icon near Idle SCU) fixed for Cybran, UEF and Seraphim (by Dragonfire)
+Version 9: SCU Manager Preset Config Manager (right click on Combat or Eng icon near Idle SCU) fixed for Cybran, UEF and Seraphim (by Dragonfire)
 
 Version 6: Thanks to ghaleon for many additional modules (see the posted readme below), and for doing most of the work for this release. Also thanks to Thygrrr for Smart Economy Indicators, and for nice Strat Build Icons to replace my fugly ones. :D
 
