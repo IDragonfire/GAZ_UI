@@ -1,6 +1,6 @@
 name = "GAZ_UI"
-uid = "55394440-5DC8-11E3-91ED-93226288709B"
-version = 8
+uid = "e9bb4b11-2952-4b19-bf4e-11fb6e5fcbe9"
+version = 9
 description = "Goom & AdmiralZeech's UI collection, all modules can be enabled/disabled in the options menu ingame. (Nomads version)"
 author = "AdmiralZeech"
 url = "http://forums.gaspowered.com/viewtopic.php?p=414706"
@@ -23,6 +23,8 @@ conflicts = {
 before = { }
 after = { }
 
+-- V9 UID : e9bb4b11-2952-4b19-bf4e-11fb6e5fcbe9
+-- V9 : ???
 -- V8 UID : 55394440-5DC8-11E3-91ED-93226288709B
 -- V8 : Remove temporary the crash on the straticons.lua line 524 by Xinnony
 -- V7 UID : 4f8b5ac3-346c-4d25-ac34-7b8ccc14eb0a
