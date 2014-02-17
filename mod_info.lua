@@ -1,7 +1,7 @@
 name = "GAZ_UI"
 uid = "e9bb4b11-2952-4b19-bf4e-11fb6e5fcbe9"
 version = 9
-description = "Goom & AdmiralZeech's UI collection, all modules can be enabled/disabled in the options menu ingame. (Nomads version)"
+description = "Goom & AdmiralZeech's UI collection, all modules can be enabled/disabled in the options menu ingame. (Nomads version with Hotfix from Dragonfire)"
 author = "AdmiralZeech"
 url = "http://forums.gaspowered.com/viewtopic.php?p=414706"
 icon = "/mods/gaz_ui/mod_icon.dds"
