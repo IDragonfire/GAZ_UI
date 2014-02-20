@@ -1,8 +1,4 @@
 do		
-
-local Factions = import('/lua/factions.lua').Factions
-
-
 	local Prefs = import('/lua/user/prefs.lua')
 	local options = Prefs.GetFromCurrentProfile('options')
 	local Effect = import('/lua/maui/effecthelpers.lua')
@@ -122,7 +118,6 @@ local Factions = import('/lua/factions.lua').Factions
 			            sortedOptions.templates = {}
 						local function ConvertID(BPID)
 							local prefixes = {
-
 								["AEON"] = {
 									"uab",
 									"xab",
@@ -144,20 +139,6 @@ local Factions = import('/lua/factions.lua').Factions
 									"dsb",
 								},
 							}
-
-for k, FactionData in Factions do
-    if FactionData.IsCustomFaction then
-        if FactionData.GAZ_UI_Info.BuildingIdPrefixes then
-            prefixes[ FactionData.Category ] = FactionData.GAZ_UI_Info.BuildingIdPrefixes
-        else
-            LOG('*DEBUG GAZ_UI: Missing GAZ_UI info BuildingIdPrefixes for faction '..repr(FactionData.Category))
-            prefixes[ FactionData.Category ] = {}
-        end
-    end
-end
-#LOG('*DEBUG GAZ_UI: prefixes = '..repr(prefixes))
-
-
 							for i, prefix in prefixes[string.upper(currentFaction)] do
 								if table.find(buildableUnits, string.gsub(BPID, "(%a+)(%d+)", prefix .. "%2")) then
 									return string.gsub(BPID, "(%a+)(%d+)", prefix .. "%2")
@@ -255,28 +236,13 @@ end
 				if __blueprints[control.Data.id].StrategicIconName then
 					local iconName = __blueprints[control.Data.id].StrategicIconName
 					local iconConversion
-
-                                        # Look up icon in translation table
 					if options.gui_bigger_strat_build_icons == 2 then
 						iconConversion = straticonsfile.aSpecificStratIcons[control.Data.id] or straticonsfile.aStratIconTranslationFull[iconName]
 					else
 						iconConversion = straticonsfile.aSpecificStratIcons[control.Data.id] or straticonsfile.aStratIconTranslation[iconName]
 					end
-
-                                        # see if entry in table actually exists
-					if iconConversion then
-                                            if DiskGetFileInfo('/mods/GAZ_UI/textures/icons_strategic/'..iconConversion..'.dds') then
-                                                iconConversion = '/mods/GAZ_UI/textures/icons_strategic/'..iconConversion..'.dds'
-                                            elseif DiskGetFileInfo(iconConversion..'.dds') then
-                                                iconConversion = iconConversion..'.dds'
-                                            else
-                                                iconConversion = false
-                                            end
-                                        end
-
-                                        # if all good show icon
-					if iconConversion then
-						control.StratIcon:SetTexture(iconConversion)
+					if iconConversion and DiskGetFileInfo('/mods/GAZ_UI/textures/icons_strategic/'..iconConversion..'.dds') then
+						control.StratIcon:SetTexture('/mods/GAZ_UI/textures/icons_strategic/'..iconConversion..'.dds')
 						LayoutHelpers.AtTopIn(control.StratIcon, control.Icon, 1)
 						LayoutHelpers.AtRightIn(control.StratIcon, control.Icon, 1)
 						LayoutHelpers.ResetBottom(control.StratIcon)

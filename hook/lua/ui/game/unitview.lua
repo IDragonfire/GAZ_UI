@@ -125,9 +125,6 @@ do
                     end
 --endevilnewcode
 
-# Modification by Brute51 for compatibility  with Nomads
-if not info.userUnit:GetBlueprint().Capacitor then
-
                     if info.shieldRatio > 0 and info.userUnit:GetBlueprint().Defense.Shield.ShieldMaxHealth then
                         local ShieldMaxHealth = info.userUnit:GetBlueprint().Defense.Shield.ShieldMaxHealth
                         controls.shieldText:Show()
@@ -147,9 +144,6 @@ if not info.userUnit:GetBlueprint().Capacitor then
                             controls.shieldText:SetText(string.format("%d / %d", math.floor(ShieldMaxHealth*info.shieldRatio), ShieldMaxHealth ))
                         end
                     end
-end
-# End modification
-
 --newcode
                     if info.userUnit != nil and info.userUnit:GetBuildRate() >= 2 then
                         controls.Buildrate:SetText(string.format("%d",math.floor(info.userUnit:GetBuildRate())))

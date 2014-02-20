@@ -182,10 +182,7 @@ do
 		        local keyToIcon = {'T1','T2','T2F','T3','SCU', 'SCU', 'SCU'}
 		        for index, units in engineers do
 		            local i = index
-
-#		            if i == 3 and currentFaction != 1 then
-            if i == 3 and (not Factions[currentFaction].IdleEngTextures or not Factions[currentFaction].IdleEngTextures.T2F) then
-
+		            if i == 3 and currentFaction != 1 then
 		                continue
 		            end
 		            if not self.icons[i] then

@@ -38,20 +38,8 @@ function GetUnitRolloverInfo(unit)
 	info.maxHealth = unit:GetMaxHealth()
 	info.health = unit:GetHealth()
 	info.fuelRatio = unit:GetFuelRatio()
+	info.shieldRatio = unit:GetShieldRatio()
 	info.workProgress = unit:GetWorkProgress()
-
-# Modification by Brute51 for compatibility with Nomads
-# Nomads is abusing the shield ratio thing for the capacitor. GAZ_UI should not look at the shield ratio when the unit has a capacitor.
-# TODO: remove this once a better method to display the capacitor state is implemented.
-# original:	info.shieldRatio = unit:GetShieldRatio()
-
-        if unit:GetBlueprint().Capacitor then
-            info.shieldRatio = 0
-        else
-            info.shieldRatio = unit:GetShieldRatio()
-        end
-
-# end modification
 
 	if unit:GetFocus() then
 		info.focus = GetUnitRolloverInfo(unit:GetFocus())

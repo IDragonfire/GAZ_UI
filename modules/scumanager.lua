@@ -1,8 +1,3 @@
-local FactionsFile = import('/lua/factions.lua')
-local Factions = FactionsFile.Factions
-local FactionNames = table.keys(FactionsFile.FactionIndexMap)
-
-
 local UIUtil = import('/lua/ui/uiutil.lua')
 local LayoutHelpers = import('/lua/maui/layouthelpers.lua')
 local Bitmap = import('/lua/maui/bitmap.lua').Bitmap
@@ -75,21 +70,6 @@ local upgradeDefaultTable = {
 		}
 	},
 }
-
-for k, FactionData in Factions do
-    if not upgradeDefaultTable[ FactionData.Category ] then
-        if FactionData.GAZ_UI_Info.SCUEnhancementPaths then
-            upgradeDefaultTable[ FactionData.Category ] = FactionData.GAZ_UI_Info.SCUEnhancementPaths
-        else
-            LOG('*DEBUG GAZ_UI: Missing GAZ_UI info SCUEnhancementPaths for faction '..repr(FactionData.Category))
-            upgradeDefaultTable[ FactionData.Category ] = { Combat = {}, Engineer = {}, }
-        end
-    end
-end
-#LOG('*DEBUG GAZ_UI: upgradeDefaultTable = '..repr(upgradeDefaultTable))
-
-
-
 local upgradeTable = {}
 --button container, for positioning externally
 buttonGroup = false
@@ -168,10 +148,7 @@ function ConfigureUpgrades()
 	
 	LayoutHelpers.AtLeftTopIn(factionChooser, window, 6, 6)
 	factionChooser.Width:Set(100)
-
-
-	factionChooser:AddItems( FactionNames )
-
+	factionChooser:AddItems({'Aeon', 'Cybran', 'UEF', 'Seraphim'})
 	factionChooser.OnClick = function(self, index, text)
 		if combatButton:IsChecked() then
 			LayoutGrid(buttonGrid, text, 'Combat')
@@ -225,37 +202,28 @@ function ConfigureUpgrades()
 	end
 
 	if GetSelectedUnits() then
-		local faction, index = GetFactionName(GetSelectedUnits()[1])
-		if faction and index then
-			factionChooser:SetItem(index)
+		local faction = GetSelectedUnits()[1]:GetBlueprint().General.FactionName
+		FactionIndexTable = {Aeon = 1, Cybran = 2, UEF = 3, Seraphim = 4}
+		if FactionIndexTable[faction] then
+			factionChooser:SetItem(FactionIndexTable[faction])
 			LayoutGrid(buttonGrid, faction, 'Combat')
 		else
-			LayoutGrid(buttonGrid, Factions[1].Key, 'Combat')
+			LayoutGrid(buttonGrid, 'Aeon', 'Combat')
 		end
 	else
-		LayoutGrid(buttonGrid, Factions[1].Key, 'Combat')
+		LayoutGrid(buttonGrid, 'Aeon', 'Combat')
 	end
 end
-
-
-function GetFactionName(unit)
-    local ubp = unit:GetBlueprint()
-    local faction = string.lower(ubp.General.FactionName)
-    local index = FactionsFile.FactionIndexMap[faction]
-    local factionCat = Factions[index].Category
-    return faction, index, factionCat
-end
-
 
 --shows available and current enhancements for an scu type
 function LayoutGrid(buttonGrid, faction, scuType)
 	--get the enhancements available to whichever scu is being edited
 	local bpid = 'ual0301'
-	if faction == 'cybran' then
+	if faction == 'Cybran' then
 		bpid = 'url0301'
-	elseif faction == 'uef' then
+	elseif faction == 'UEF' then
 		bpid = 'uel0301'
-	elseif faction == 'seraphim' then
+	elseif faction == 'Seraphim' then
 		bpid = 'xsl0301'
 	end
 	local bp = __blueprints[bpid]
@@ -345,23 +313,6 @@ function GetEnhancementPrefix(unitID, iconID)
         prefix = '/game/cybran-enhancements/'..iconID
     elseif string.sub(unitID, 2, 2) == 's' then
         prefix = '/game/seraphim-enhancements/'..iconID
-
-    else
-
-        for k, FactionData in Factions do
-            if FactionData.GAZ_UI_Info.TexEnhancementPrefix then
-                if string.sub(unitID, 2, 2) == FactionData.GAZ_UI_Info.TexEnhancementPrefix.char then
-                    prefix = FactionData.GAZ_UI_Info.TexEnhancementPrefix.prefix .. iconID
-                    break
-                end
-            else
-                LOG('*DEBUG GAZ_UI: Missing GAZ_UI info TexEnhancementPrefix for faction '..repr(FactionData.Category))
-            end
-        end
-        if prefix == '' then
-            prefix = '/game/seraphim-enhancements/'..iconID
-        end
-
     end
     return prefix
 end
@@ -487,18 +438,16 @@ end
 
 --tell the scu what type it now is, and upgrade it
 function UpgradeSCU(unit, upgType)
-	local unused, index, faction = GetFactionName(unit)
-
-#	if unit:IsInCategory('UEF') then
-#		faction = 'UEF'
-#	elseif unit:IsInCategory('AEON') then
-#		faction = 'AEON'
-#	elseif unit:IsInCategory('CYBRAN') then
-#		faction = 'CYBRAN'
-#	elseif unit:IsInCategory('SERAPHIM') then
-#		faction = 'SERAPHIM'
-#	end
-
+	local faction = false
+	if unit:IsInCategory('UEF') then
+		faction = 'UEF'
+	elseif unit:IsInCategory('AEON') then
+		faction = 'AEON'
+	elseif unit:IsInCategory('CYBRAN') then
+		faction = 'CYBRAN'
+	elseif unit:IsInCategory('SERAPHIM') then
+		faction = 'SERAPHIM'
+	end
 	if faction then
 		local upgList = upgradeTable[faction][upgType]
 		if table.getsize(upgList) == 0 then

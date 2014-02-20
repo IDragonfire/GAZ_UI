@@ -21,7 +21,7 @@ do
     }
     Tooltips.options_gui_all_race_templates = {
         title = 'GUI Mod',
-        description = 'Allows build templates to be used across all factions.',
+        description = 'Allows build templates to be used across all 4 factions.',
     }
     Tooltips.options_gui_enhanced_unitview = {
         title = 'GUI Mod',
