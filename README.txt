@@ -11,6 +11,18 @@ get the time.  If you cant find something here, try the forum post:
 
 http://forums.gaspowered.com/viewtopic.php?p=414706
 
+
+----------------
+|Install Notes:
+
+- Be sure to remove old versions of the mod!
+
+- Make sure the GAZ_UI folder inside this archive is placed into the 
+FA "mods" folder.  For example, the path to this README should be:
+
+<ForgedAlliance>\mods\GAZ_UI\README.txt
+
+
 ---------------- 
 |Overview - Options
 

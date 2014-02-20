@@ -8,7 +8,7 @@ local options = Prefs.GetFromCurrentProfile('options')
 local sep1 = "."
 local sep2 = "-"
 
-if options.gui_auto_rename_replays != 0 then
+if options.gui_auto_rename_replays != 0 and not SessionIsReplay() then
 
     function AutoRenameReplay()
         til = GetSpecialFileInfo(profile, LOC("<LOC Engine0030>") , 'Replay').WriteTime
